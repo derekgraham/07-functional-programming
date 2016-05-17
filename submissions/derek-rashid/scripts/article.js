@@ -99,11 +99,11 @@
     return Article.all.map( function(article){
       return article.author;
     })
-    .reduce( function(acc, value, index, array){
-      if(acc.indexOf(value) === -1) {
-        acc.push(value);
+    .reduce( function(authorList, curAuthor, index, array){
+      if(authorList.indexOf(curAuthor) === -1) {
+        authorList.push(curAuthor);
       }
-      return acc;
+      return authorList;
     },[]);
     /* TODO: For our `reduce` that we'll chain here -- since we are trying to
         return an array, we'll need to specify an accumulator type...
@@ -115,11 +115,20 @@
         One for the author's name, and one for the total number of words across
         the matching articles written by the specified author. */
     return Article.allAuthors().map(function(a) { // 'a' is a reference to an individual author.
-      return {
+      return { name: a,
+        numWords: Article.all.filter( function(element, index, array){
+          return a === element.author;
+        },a)
+        .map(function(article) {
+          //DONE: Grab the word count from each article body.
+          return article.body.match(/\b\w+/g).length;
+        })
+        .reduce(function(a, b) {
+          return a + b;
+        })
         // name:
         // numWords: someCollection.filter(function(curArticle) {
         //  what do we return here to check for matching authors?
-        // })
         // .map(...) // use .map to return the author's word count for each article's body (hint: regexp!).
         // .reduce(...) // squash this array of numbers into one big number!
       };
