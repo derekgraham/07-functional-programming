@@ -54,16 +54,16 @@ Article.fetchAll = function(next) {
         var eTag = xhr.getResponseHeader('eTag');
         if (!localStorage.eTag || eTag !== localStorage.eTag) {
           localStorage.eTag = eTag;
-          Article.getAll(); //TODO: pass 'next' into getAll();
+          Article.getAll(next); //TODO: pass 'next' into getAll();
         } else {
           Article.loadAll(JSON.parse(localStorage.hackerIpsum));
           // TODO: Replace the following line with 'next' and call next instead.
-          articleView.initIndexPage();
+          next();
         }
       }
     });
   } else {
-    Article.getAll(); // TODO: pass 'next' into getAll();
+    Article.getAll(next); // TODO: pass 'next' into getAll();
   }
 };
 
