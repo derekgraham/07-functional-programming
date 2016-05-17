@@ -74,6 +74,7 @@
       Article.loadAll(responseData);
       localStorage.hackerIpsum = JSON.stringify(responseData);
       // TODO: call next!
+      next();
     });
   };
 
@@ -115,4 +116,5 @@
       };
     });
   };
+  module.Article = Article;
 })(window);
