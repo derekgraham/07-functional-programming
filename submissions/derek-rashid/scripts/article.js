@@ -87,6 +87,7 @@
     })
     .reduce(function(a, b) {
       // return (TODO: Sum up all the values!)
+      return a + b;
     });
   };
 
@@ -95,7 +96,15 @@
   Article.allAuthors = function() {
     //return       TODO: map our collection
       //return    TODO: return just the author names
-
+    return Article.all.map( function(article){
+      return article.author;
+    })
+    .reduce( function(acc, value, index, array){
+      if(acc.indexOf(value) === -1) {
+        acc.push(value);
+      }
+      return acc;
+    },[]);
     /* TODO: For our `reduce` that we'll chain here -- since we are trying to
         return an array, we'll need to specify an accumulator type...
         What data type should this accumulator be and where is it placed? */
